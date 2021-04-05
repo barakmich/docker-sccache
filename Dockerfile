@@ -5,7 +5,7 @@ WORKDIR /usr/src/sccache
 RUN apt-get update \
  && apt-get install -y libssl-dev --no-install-recommends
 
-RUN cargo install --features="dist-server,all" sccache --git https://github.com/mozilla/sccache.git --rev 8f295c09cfdd4cff4f4a0c6f0e057979eeb8842d --path .
+RUN cargo install --features="dist-client dist-server" sccache --git https://github.com/mozilla/sccache.git --rev 6b6d2f7d2dceefeb4f583712aa4c221db62be0bd --path .
 
 FROM debian:stretch-slim
 
@@ -13,7 +13,7 @@ RUN apt-get update \
  && apt-get install -y libssl1.1 --no-install-recommends \
  && apt-get install bubblewrap
 
-COPY --from=builder /usr/local/cargo/bin/sccache-dist /usr/local/bin/sccache-dist
+COPY --from=builder /usr/local/cargo/bin/ /usr/local/bin/
 
 STOPSIGNAL SIGINT
 
