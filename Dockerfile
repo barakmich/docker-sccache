@@ -15,6 +15,8 @@ RUN apt-get update \
 
 COPY --from=builder /usr/local/cargo/bin/ /usr/local/bin/
 
+ADD entrypoint.sh /
+
 STOPSIGNAL SIGINT
 
-ENTRYPOINT ["/usr/local/bin/sccache-dist"]
+ENTRYPOINT ["/entrypoint.sh"]
